@@ -8,8 +8,8 @@ var gapi = window.gapi;
 /* 
   Update with your own Client Id and Api key 
 */
-var CLIENT_ID = "916339098745-s179qhqr7l8qli325aeeev125jplaooo.apps.googleusercontent.com";
-var API_KEY = "AIzaSyCt8648i5hKUavsbm5aV4FFyh1V0mCDAUg";
+var CLIENT_ID = "";
+var API_KEY = "";
 var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
 var SCOPES = "https://www.googleapis.com/auth/calendar";
 
