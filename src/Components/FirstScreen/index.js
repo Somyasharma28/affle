@@ -35,7 +35,8 @@ const FirstScreen = (props) => {
 
     const submitData = (date, slot, present) => {
         const dateValue= date.split("-");
-        const meetingDate= new Date(dateValue[2],dateValue[1],dateValue[0], slot["time"],0,0);
+        const hour=slot["value"].split(":")[0];
+        const meetingDate= new Date(dateValue[2],dateValue[1],dateValue[0], hour,0,0);
         
         if (present) {
             const slots = meetingData[email][date];
