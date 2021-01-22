@@ -63,7 +63,6 @@ const SecondScreen = (props) => {
 
 
     const dateChange=(date)=>{
-        debugger;
         setMeetingDate(date);
         setCurrentDate(dateFormat(new Date())===dateFormat(date));
         setslowSlot(true);
@@ -88,7 +87,6 @@ const SecondScreen = (props) => {
                 dateArray.forEach((val)=>{
                     slotArray.push(val["slot"]);
                 })
-                console.log(slotArray);
                 
                 setPresentSlots([...slotArray]);
             }else{

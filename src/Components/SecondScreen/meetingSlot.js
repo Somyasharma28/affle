@@ -18,13 +18,12 @@ const slotSelection=(idx)=>
 
 
 const showSlots=(selectedSlots)=>{
-    debugger;
    let time= new Date().getHours();
 
    let beforeTime=[];
    slot.forEach((val,idx)=>{
         let slotVal=val.split(":")[0];
-         if(parseInt(slotVal)<parseInt(time))
+         if(parseInt(slotVal)<=parseInt(time))
          {
             beforeTime.push(idx);
          }     

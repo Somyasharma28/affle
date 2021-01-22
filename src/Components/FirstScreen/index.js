@@ -54,7 +54,7 @@ const FirstScreen = (props) => {
     }
 
     const handleClick = (date) => {
-        debugger;
+        
         console.log(date);
         let startDate=date.toISOString();
         
@@ -102,24 +102,7 @@ const FirstScreen = (props) => {
                 }
               };
 
-            // const event = {
-            //   'description': `${meetingDesc}`,
-            //   'start': {
-            //     'dateTime': `${date}` ,
-            //     'timeZone': 'India/New_Delhi'
-            //   },
-            //   'end': {
-            //     'dateTime': `${endDate}`,
-            //     'timeZone': 'India/New_Delhi'
-            //   },
-            //   'reminders': {
-            //     'useDefault': false,
-            //     'overrides': [
-            //       {'method': 'email', 'minutes': 24 * 60},
-            //       {'method': 'popup', 'minutes': 10}
-            //     ]
-            //   }
-            // };
+            
         
             var request =  gapi.client.calendar.events.insert({
               'calendarId': 'primary',
