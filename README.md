@@ -1,3 +1,7 @@
+In the App.js file
+Please provide your username and email on which you want to see the event. Based on userame it will fetch the email.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
