@@ -54,7 +54,7 @@ const FirstScreen = (props) => {
     }
 
     const handleClick = (date) => {
-        
+        debugger;
         console.log(date);
         let startDate=date.toISOString();
         
@@ -102,7 +102,24 @@ const FirstScreen = (props) => {
                 }
               };
 
-            
+            // const event = {
+            //   'description': `${meetingDesc}`,
+            //   'start': {
+            //     'dateTime': `${date}` ,
+            //     'timeZone': 'India/New_Delhi'
+            //   },
+            //   'end': {
+            //     'dateTime': `${endDate}`,
+            //     'timeZone': 'India/New_Delhi'
+            //   },
+            //   'reminders': {
+            //     'useDefault': false,
+            //     'overrides': [
+            //       {'method': 'email', 'minutes': 24 * 60},
+            //       {'method': 'popup', 'minutes': 10}
+            //     ]
+            //   }
+            // };
         
             var request =  gapi.client.calendar.events.insert({
               'calendarId': 'primary',
@@ -129,22 +146,22 @@ const FirstScreen = (props) => {
 
 
     const submitHandler = () => {
+        debugger;
         if (meetingRoom && meetingDesc && username) {
             let userIndex = null;
-            props.userData.every((user, idx) => {
+            props.userData.forEach((user, idx) => {
                 if (user.username === username) {
                     userIndex = idx;
-                    return true;
                 }
             });
             if (userIndex !== null) {
                 const userEmail = props.userData[userIndex].email;
                 setEmail(userEmail);
                 let meetingDataIndex = null;
-                Object.keys(meetingData).every((userMeeting, idx) => {
+                Object.keys(meetingData).forEach((userMeeting, idx) => {
                     if (userMeeting === userEmail) {
                         setUserData(meetingData[userMeeting]);
-                        meetingDataIndex = userMeeting;
+                        meetingDataIndex = idx;
                         return true;
                     }
                 });
@@ -177,7 +194,7 @@ const FirstScreen = (props) => {
             <h6>Booking is done!</h6>
             <Button outline color="danger" onClick={() => resetApplication()}>Back</Button></>
             : selectDateSlot ? <SecondScreen userData={userMeetingData} submitData={submitData} meetingRoom={meetingRoom} meetingDesc={meetingDesc} /> :
-                <Form onSubmit={submitHandler} >
+                <Form onSubmit={submitHandler} method="POST" >
                     <FormGroup>
                         <Label for="meetingRoom">Meeting Room</Label>
                         <Input required type="select" name="meetingRoom" id="meetingRoom" onChange={(e) => setMeetingRoom(e.target.value)}>
