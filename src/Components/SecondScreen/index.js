@@ -26,7 +26,7 @@ const dateFormat=(date)=>
 const SecondScreen = (props) => {
     
     const [meetingDate, setMeetingDate] = useState(new Date());
-    const [currentDate]= useState(dateFormat(new Date())===dateFormat(meetingDate));
+    const [currentDate, setCurrentDate]= useState(dateFormat(new Date())===dateFormat(meetingDate));
     const [presentDate, setPresentDate]= useState(false);
     const [presentSlots, setPresentSlots]= useState([]);
     const [meetingSlot, setMeetingSlot]= useState({});
@@ -63,7 +63,9 @@ const SecondScreen = (props) => {
 
 
     const dateChange=(date)=>{
+        debugger;
         setMeetingDate(date);
+        setCurrentDate(dateFormat(new Date())===dateFormat(date));
         setslowSlot(true);
     }
 

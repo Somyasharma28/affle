@@ -18,6 +18,7 @@ const slotSelection=(idx)=>
 
 
 const showSlots=(selectedSlots)=>{
+    debugger;
    let time= new Date().getHours();
 
    let beforeTime=[];

@@ -83,11 +83,11 @@ const FirstScreen = (props) => {
                 'description': `${meetingDesc}`,
                 'start': {
                   'dateTime': `${startDate}`,
-                  'timeZone': 'America/Los_Angeles'
+                  'timeZone': 'Asia/Kolkata'
                 },
                 'end': {
                   'dateTime': `${endDate}`,
-                  'timeZone': 'America/Los_Angeles'
+                  'timeZone': 'Asia/Kolkata'
                 },
                 'recurrence': [
                   'RRULE:FREQ=DAILY;COUNT=1'
