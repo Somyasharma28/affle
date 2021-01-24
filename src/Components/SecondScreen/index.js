@@ -70,16 +70,14 @@ const SecondScreen = (props) => {
 
     const showSlot=()=>{
         let present=false;
-        Object.keys(props.userData).map((val)=>{
+        Object.keys(props.userData).forEach((val)=>{
             if(val===dateFormat(meetingDate))
             {
                 setPresentDate(true);
                 present=true;
-                return true;
             }
          
         });
-           
             if(present)
             {
                 const dateArray=props.userData[dateFormat(meetingDate)];
@@ -87,12 +85,39 @@ const SecondScreen = (props) => {
                 dateArray.forEach((val)=>{
                     slotArray.push(val["slot"]);
                 })
+
+                Object.keys(props.meetingData).forEach((mVal,idx)=>{
+                    Object.keys(props.meetingData[mVal]).forEach((dVal,idx)=>{
+                        props.meetingData[mVal][dVal].forEach((sval)=>{
+                            console.log(props.meetingData[mVal][dVal][sval]);
+                            if(sval["meetingRoom"]===props.meetingRoom && dateFormat( sval["date"])=== dateFormat(meetingDate))
+                            {
+                                if(!slotArray.includes(sval["slot"]))
+                                slotArray.push(sval["slot"]);
+                            }
+                        })
+                    })
+
+                })
                 
                 setPresentSlots([...slotArray]);
             }else{
-                setPresentSlots([]);
-            }
+                let slotArray=[];
+                Object.keys(props.meetingData).forEach((mVal,idx)=>{
+                    Object.keys(props.meetingData[mVal]).forEach((dVal,idx)=>{
+                        props.meetingData[mVal][dVal].forEach((sval)=>{
+                            console.log(props.meetingData[mVal][dVal][sval]);
+                            if(sval["meetingRoom"]===props.meetingRoom && dateFormat( sval["date"])=== dateFormat(meetingDate))
+                            {
+                                slotArray.push(sval["slot"]);
+                            }
+                        })
+                    })
 
+                })
+
+                setPresentSlots([...slotArray]);
+            }
         
         if(setslowSlot){
             setslowSlot(false);
@@ -127,7 +152,8 @@ const SecondScreen = (props) => {
       <Slot selectedSlots={presentSlots}  currentDate={currentDate} setMeetingSlot={setMeetingSlot} ></Slot>
       </div>
       <br/>
-      <Button color="danger" onClick={()=>submitData(dateFormat(meetingDate),meetingSlot)}>Book Appointment</Button>
+      <Button color="danger" className="mr-2" onClick={()=>submitData(dateFormat(meetingDate),meetingSlot)}>Book Appointment</Button>
+      <Button color="danger" onClick={()=>props.setSubmit(true)}>Logout</Button>
     </React.Fragment>);
 };
 

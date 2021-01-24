@@ -4,6 +4,10 @@ import { Navbar } from 'reactstrap';
 const userData=[{
   username: "Somya",
   email: "somyawork2806@gmail.com",
+},
+{
+  username: "Shruti",
+  email: "shrutisharma7047@gmail.com",
 }]
 
 function App() {

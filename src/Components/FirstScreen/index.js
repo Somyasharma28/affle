@@ -15,7 +15,7 @@ var SCOPES = "https://www.googleapis.com/auth/calendar";
 
 const meetingData = {
     // email:{
-    //date : slot
+    //date : array({meeting details})
     //}
 }
 
@@ -31,6 +31,7 @@ const FirstScreen = (props) => {
     const [userMeetingData, setUserData] = useState(null);
     const [email, setEmail] = useState(null);
     const [submit, setSubmit] = useState(false);
+    const [submitDone, setSubmitDone] = useState(false);
 
 
     const submitData = (date, slot, present) => {
@@ -46,24 +47,16 @@ const FirstScreen = (props) => {
         } else {
             meetingData[email][date] = [{ meetingRoom, meetingDesc, "date":meetingDate,"slot": slot["id"] }];
         }
-
-        console.log("Appointment is book", meetingData);
         handleClick(meetingDate);
-        //setSubmit(true);
 
     }
 
     const handleClick = (date) => {
-        debugger;
-        console.log(date);
-        let startDate=date.toISOString();
+        const startDate=date.toISOString();
         
-        let endDate=(new Date(date.valueOf()+(60*60*1000))).toISOString();
+        const endDate=(new Date(date.valueOf()+(60*60*1000))).toISOString();
          
-        console.log(startDate,endDate);
-
-
-        gapi.load('client:auth2', () => {
+         gapi.load('client:auth2', () => {
           console.log('loaded client')
     
           gapi.client.init({
@@ -78,9 +71,9 @@ const FirstScreen = (props) => {
           gapi.auth2.getAuthInstance().signIn()
           .then(() => {
 
-            var event = {
+            const event = {
                  'summary': `Meeting Room booked by ${username}`,
-                 'location': 'India',
+                 'location': `Affle ${meetingRoom}`,
                 'description': `${meetingDesc}`,
                 'start': {
                   'dateTime': `${startDate}`,
@@ -102,26 +95,8 @@ const FirstScreen = (props) => {
                 }
               };
 
-            // const event = {
-            //   'description': `${meetingDesc}`,
-            //   'start': {
-            //     'dateTime': `${date}` ,
-            //     'timeZone': 'India/New_Delhi'
-            //   },
-            //   'end': {
-            //     'dateTime': `${endDate}`,
-            //     'timeZone': 'India/New_Delhi'
-            //   },
-            //   'reminders': {
-            //     'useDefault': false,
-            //     'overrides': [
-            //       {'method': 'email', 'minutes': 24 * 60},
-            //       {'method': 'popup', 'minutes': 10}
-            //     ]
-            //   }
-            // };
-        
-            var request =  gapi.client.calendar.events.insert({
+                    
+            const request =  gapi.client.calendar.events.insert({
               'calendarId': 'primary',
               'resource': event,
             });
@@ -130,7 +105,10 @@ const FirstScreen = (props) => {
               console.log(events)
               window.open(events.htmlLink)
             })
-        }).then(()=> setSubmit(true))
+        }).then(()=>{
+            setSubmit(true);
+            setSubmitDone(true);
+        })
     })
 }
 
@@ -142,11 +120,12 @@ const FirstScreen = (props) => {
        setUserData(null);
        setUserName('');
        setEmail(null);
+       setSubmitDone(false);
    }
 
 
     const submitHandler = () => {
-        debugger;
+        
         if (meetingRoom && meetingDesc && username) {
             let userIndex = null;
             props.userData.forEach((user, idx) => {
@@ -190,10 +169,11 @@ const FirstScreen = (props) => {
 
     return (<React.Fragment>
         
-        {submit ? <>
-            <h6>Booking is done!</h6>
+        {submit ? <> {
+            submitDone? <h6>Booking is done!</h6>:<h6>Booking is not done!</h6>
+            } 
             <Button outline color="danger" onClick={() => resetApplication()}>Back</Button></>
-            : selectDateSlot ? <SecondScreen userData={userMeetingData} submitData={submitData} meetingRoom={meetingRoom} meetingDesc={meetingDesc} /> :
+            : selectDateSlot ? <SecondScreen userData={userMeetingData} submitData={submitData} meetingRoom={meetingRoom} meetingDesc={meetingDesc} meetingData={meetingData} setSubmit={setSubmit} /> :
                 <Form onSubmit={submitHandler} method="POST" >
                     <FormGroup>
                         <Label for="meetingRoom">Meeting Room</Label>

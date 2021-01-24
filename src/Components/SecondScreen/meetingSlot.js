@@ -4,9 +4,6 @@ import { Button} from 'reactstrap';
 
 const slot=["10:00 AM","11:00 AM","12:00 PM","13:00 PM","14:00 PM","15:00 PM","16:00 PM","17:00 PM","18:00 PM"];
 
-
-
-
 const Slot = (props) => {
  
 const slotSelection=(idx)=>
@@ -18,8 +15,11 @@ const slotSelection=(idx)=>
 
 
 const showSlots=(selectedSlots)=>{
-   let time= new Date().getHours();
-
+   const date=new Date();
+   const[time, day]= [date.getHours(), date.getDay()];
+   let newSlotArray=[];
+   if(day!==0 && day!==6)
+   {
    let beforeTime=[];
    slot.forEach((val,idx)=>{
         let slotVal=val.split(":")[0];
@@ -28,8 +28,13 @@ const showSlots=(selectedSlots)=>{
             beforeTime.push(idx);
          }     
    });
-   const newSlotArray=[...selectedSlots, ...beforeTime ];
-  return slot.map((val,idx)=>{
+    newSlotArray=[...selectedSlots, ...beforeTime ];
+    }else{
+        slot.forEach((val,idx)=>{
+            newSlotArray.push(idx);
+        });
+    }
+    return slot.map((val,idx)=>{
     return newSlotArray.includes(idx)?<Button className="m-2" outline color="dark" disabled={true}  key={`${val}_`} >{val}</Button> :<Button outline color="danger" className="m-2" onClick={()=>slotSelection(idx)}  key={`${val}_`} >{val}</Button>;
     });
 
